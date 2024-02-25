@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
 namespace RetroInventoryApi
@@ -39,17 +38,6 @@ namespace RetroInventoryApi
             app.MapControllers();
 
             app.Run();
-        }
-    }
-
-    public class ApplicationDbContext : DbContext
-    {
-        string DbUsername = Environment.GetEnvironmentVariable("RETROINVENTORY_DB_USERNAME");
-        string DbPassword = Environment.GetEnvironmentVariable("RETROINVENTORY_DB_PASSWORD");
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql($"Host=localhost;Database=retroinventorydb;Username={DbUsername};Password={DbPassword}");
         }
     }
 }
