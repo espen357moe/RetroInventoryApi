@@ -1,6 +1,6 @@
 ﻿namespace RetroInventoryApi.Domain
 {
-    public class Item
+    public sealed class Item
     {
         public Guid Id { get; set; }
         public string? Manufacturer { get; set; }
