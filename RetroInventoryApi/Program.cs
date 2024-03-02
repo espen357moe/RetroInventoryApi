@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using RetroInventoryApi.Database;
 
 namespace RetroInventoryApi
 {
@@ -7,7 +8,6 @@ namespace RetroInventoryApi
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
 
             builder.Services.AddControllers();
             builder.Services.AddControllers().AddJsonOptions(options =>
@@ -21,6 +21,7 @@ namespace RetroInventoryApi
             );
 
             builder.Services.AddDbContext<ApplicationDbContext>();
+            builder.Services.AddScoped<Repository>();
 
             var app = builder.Build();
 
@@ -33,7 +34,6 @@ namespace RetroInventoryApi
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

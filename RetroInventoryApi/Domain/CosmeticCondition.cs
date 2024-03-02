@@ -1,12 +1,12 @@
 ﻿namespace RetroInventoryApi.Domain
 {
-    public enum Condition
+    public enum CosmeticCondition
     {
+        NotSpecified,
         NewInBox,
         Pristine,
         Good,
         Fair,
-        Poor,
-        Broken
+        Poor
     }
 }
