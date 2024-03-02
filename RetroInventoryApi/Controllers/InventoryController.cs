@@ -39,13 +39,15 @@ namespace RetroInventoryApi.Controllers
         }
 
         [HttpPost(Name = "CreateItem")]
-        public IActionResult CreateItem(Item item)
+        public async Task<ActionResult<Item>> CreateItem(Item item)
         {
-            _repository.CreateItem(item);
+            await _repository.CreateItem(item);
             return CreatedAtRoute("GetItem", new { id = item.Id }, item);
         }
 
-        [HttpDelete(Name = "DeleteItem")]
+        [HttpDelete("{id}", Name = "DeleteItem")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteItem(Guid id)
         {
             var item = _repository.GetItem(id);
@@ -55,9 +57,9 @@ namespace RetroInventoryApi.Controllers
                 return NotFound();
             }
             
-            var deletionResult = await _repository.DeleteItem(id);
+            var deletionSuccessful = await _repository.DeleteItem(id);
             
-            if (!deletionResult)
+            if (!deletionSuccessful)
             {
                 return BadRequest();
             }

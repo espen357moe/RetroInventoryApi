@@ -23,10 +23,10 @@ namespace RetroInventoryApi.Database
             return await _dbContext.Items.FindAsync(id);                            
         }
 
-        public void CreateItem(Item item)
+        public async Task CreateItem(Item item)
         {
             _dbContext.Items.AddRange(item);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
         public void CreateItems(IEnumerable<Item> items)
