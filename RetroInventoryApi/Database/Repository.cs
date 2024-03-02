@@ -24,20 +24,19 @@ namespace RetroInventoryApi.Database
 
         public async Task CreateItem(Item item)
         {
-            _dbContext.Items.AddRange(item);
+            _dbContext.Items.Add(item);
             await _dbContext.SaveChangesAsync();
         }
 
-        public void CreateItems(IEnumerable<Item> items)
+        public async Task CreateItemGroup(ItemGroup itemGroup)
         {
-            _dbContext.Items.AddRange(items);
-            _dbContext.SaveChanges();
+            _dbContext.ItemGroups.Add(itemGroup);
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void CreateItemGroups(IEnumerable<ItemGroup> itemGroups)
+        public async Task<ItemGroup?> GetItemGroup(Guid id)
         {
-            _dbContext.ItemGroups.AddRange(itemGroups);
-            _dbContext.SaveChanges();
+            return await _dbContext.ItemGroups.FindAsync(id);
         }
 
         public async Task<IEnumerable<ItemGroup>> GetItemGroups()
