@@ -86,5 +86,27 @@ namespace RetroInventoryApi.Controllers
         {
             return await _repository.GetItemGroups();
         }
-    }
+
+        [HttpGet("{id}", Name = "GetItemGroup")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ItemGroup>> GetItemGroup(Guid id)
+        {
+            var itemGroup = await _repository.GetItemGroup(id);
+
+            if (itemGroup == null)
+            {
+                return NotFound();
+            }
+
+            return itemGroup;
+        }
+
+        [HttpPost(Name = "CreateItemGroup")]
+        public async Task<ActionResult<ItemGroup>> CreateItemGroup(ItemGroup itemGroup)
+        {
+            await _repository.CreateItemGroup(itemGroup);
+            return CreatedAtRoute("GetItemGroup", new { id = itemGroup.Id }, itemGroup);
+        }
+    }    
 }

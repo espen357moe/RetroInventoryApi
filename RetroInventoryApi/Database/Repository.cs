@@ -27,6 +27,20 @@ namespace RetroInventoryApi.Database
             _dbContext.Items.Add(item);
             await _dbContext.SaveChangesAsync();
         }
+        public async Task<bool> DeleteItem(Guid id)
+        {
+            var itemToDelete = await _dbContext.Items.FindAsync(id);
+
+            if (itemToDelete == null)
+            {
+                return false;
+            }
+
+            _dbContext.Items.Remove(itemToDelete);
+            await _dbContext.SaveChangesAsync();
+
+            return true;
+        }
 
         public async Task CreateItemGroup(ItemGroup itemGroup)
         {
@@ -42,21 +56,6 @@ namespace RetroInventoryApi.Database
         public async Task<IEnumerable<ItemGroup>> GetItemGroups()
         {
             return await _dbContext.ItemGroups.ToListAsync();
-        }
-
-        public async Task<bool> DeleteItem(Guid id)
-        {
-            var itemToDelete = await _dbContext.Items.FindAsync(id);
-
-            if (itemToDelete == null)
-            {
-                return false;
-            }
-
-            _dbContext.Items.Remove(itemToDelete);
-            await _dbContext.SaveChangesAsync();                           
-
-            return true;
         }
     }
 }
