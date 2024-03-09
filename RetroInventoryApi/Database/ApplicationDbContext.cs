@@ -8,8 +8,9 @@ namespace RetroInventoryApi.Database
         // string DbUsername = Environment.GetEnvironmentVariable("RETROINVENTORY_DB_USERNAME");
         // string DbPassword = Environment.GetEnvironmentVariable("RETROINVENTORY_DB_PASSWORD");
 
+        public DbSet<Collection> Collections { get; set; }
+        public DbSet<Group> Groups { get; set; }
         public DbSet<Item> Items { get; set; }
-        public DbSet<ItemGroup> ItemGroups { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

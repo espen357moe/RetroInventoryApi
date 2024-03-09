@@ -19,7 +19,7 @@ namespace RetroInventoryApi.Database
 
         public async Task<Item?> GetItem(Guid id)
         {
-            return await _dbContext.Items.FindAsync(id);                            
+            return await _dbContext.Items.FindAsync(id);
         }
 
         public async Task CreateItem(Item item)
@@ -42,20 +42,25 @@ namespace RetroInventoryApi.Database
             return true;
         }
 
-        public async Task CreateItemGroup(ItemGroup itemGroup)
+        public async Task CreateItemGroup(Group itemGroup)
         {
             _dbContext.ItemGroups.Add(itemGroup);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<ItemGroup?> GetItemGroup(Guid id)
+        public async Task<Group?> GetItemGroup(Guid id)
         {
             return await _dbContext.ItemGroups.FindAsync(id);
         }
 
-        public async Task<IEnumerable<ItemGroup>> GetItemGroups()
+        public async Task<IEnumerable<Group>> GetItemGroups()
         {
             return await _dbContext.ItemGroups.ToListAsync();
+        }
+
+        public Task AddItemToItemGroup(Guid itemGroupId, Guid itemId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

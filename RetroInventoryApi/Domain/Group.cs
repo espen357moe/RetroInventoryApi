@@ -4,7 +4,7 @@
     {
         public Guid Id { get; private set; }
         public string? Name { get; set; }
-        // public ICollection<Item>? Items { get; set; }
+        public ICollection<Item>? Items { get; set; }
 
         public ItemGroup(string? name)
         {

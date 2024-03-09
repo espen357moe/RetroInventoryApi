@@ -1,5 +1,5 @@
-using System.Text.Json.Serialization;
 using RetroInventoryApi.Database;
+using System.Text.Json.Serialization;
 
 namespace RetroInventoryApi
 {
@@ -28,7 +28,7 @@ namespace RetroInventoryApi
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();                
+                app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();

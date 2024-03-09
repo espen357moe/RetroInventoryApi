@@ -3,7 +3,7 @@ using RetroInventoryApi.Database;
 using RetroInventoryApi.Domain;
 
 namespace RetroInventoryApi.Controllers
-{    
+{
     [ApiController]
     [Route("[controller]")]
     public sealed class ItemController : ControllerBase
@@ -51,14 +51,14 @@ namespace RetroInventoryApi.Controllers
         public async Task<IActionResult> DeleteItem(Guid id)
         {
             var item = _repository.GetItem(id);
-            
+
             if (item.Result == null)
             {
                 return NotFound();
             }
-            
+
             var deletionSuccessful = await _repository.DeleteItem(id);
-            
+
             if (!deletionSuccessful)
             {
                 return BadRequest();
@@ -82,7 +82,7 @@ namespace RetroInventoryApi.Controllers
         }
 
         [HttpGet(Name = "GetItemGroups")]
-        public async Task<IEnumerable<ItemGroup>> GetItemGroups()
+        public async Task<IEnumerable<Group>> GetItemGroups()
         {
             return await _repository.GetItemGroups();
         }
@@ -90,7 +90,7 @@ namespace RetroInventoryApi.Controllers
         [HttpGet("{id}", Name = "GetItemGroup")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ItemGroup>> GetItemGroup(Guid id)
+        public async Task<ActionResult<Group>> GetItemGroup(Guid id)
         {
             var itemGroup = await _repository.GetItemGroup(id);
 
@@ -103,10 +103,25 @@ namespace RetroInventoryApi.Controllers
         }
 
         [HttpPost(Name = "CreateItemGroup")]
-        public async Task<ActionResult<ItemGroup>> CreateItemGroup(ItemGroup itemGroup)
+        public async Task<ActionResult<Group>> CreateItemGroup(Group itemGroup)
         {
             await _repository.CreateItemGroup(itemGroup);
             return CreatedAtRoute("GetItemGroup", new { id = itemGroup.Id }, itemGroup);
         }
-    }    
+
+        [HttpPut(Name = "AddItemToItemGroup")]
+        public async Task<ActionResult<Group>> AddItemToItemGroup(Guid itemId, Guid itemGroupId)
+        {
+            var item = await _repository.GetItem(itemId);
+            var itemGroup = await _repository.GetItemGroup(itemGroupId);
+
+            if (itemGroup == null || item == null)
+            {
+                return NotFound();
+            }
+
+            await _repository.AddItemToItemGroup(itemGroupId, itemId);
+            return CreatedAtRoute("GetItemGroup", new { id = itemGroup.Id }, itemGroup);
+        }
+    }
 }
