@@ -22,6 +22,48 @@ namespace RetroInventoryApi.Database
             return await _dbContext.Collections.FindAsync(id);
         }
 
+        public async Task CreateCollection(Collection collection)
+        {
+            _dbContext.Collections.Add(collection);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<bool> DeleteCollection(Guid id)
+        {
+            var collectionToDelete = await _dbContext.Collections.FindAsync(id);
+
+            if (collectionToDelete == null)
+            {
+                return false;
+            }
+
+            _dbContext.Collections.Remove(collectionToDelete);
+            await _dbContext.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<Group?> GetGroup(Guid id)
+        {
+            return await _dbContext.Groups.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<Group>> GetGroups()
+        {
+            return await _dbContext.Groups.ToListAsync();
+        }
+
+        public async Task CreateGroup(Group group)
+        {
+            _dbContext.Groups.Add(group);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public Task AddItemToGroup(Guid itemGroupId, Guid itemId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<Item>> GetItems()
         {
             return await _dbContext.Items.ToListAsync();
@@ -37,6 +79,7 @@ namespace RetroInventoryApi.Database
             _dbContext.Items.Add(item);
             await _dbContext.SaveChangesAsync();
         }
+
         public async Task<bool> DeleteItem(Guid id)
         {
             var itemToDelete = await _dbContext.Items.FindAsync(id);
@@ -50,27 +93,6 @@ namespace RetroInventoryApi.Database
             await _dbContext.SaveChangesAsync();
 
             return true;
-        }
-
-        public async Task CreateGroup(Group group)
-        {
-            _dbContext.Groups.Add(group);
-            await _dbContext.SaveChangesAsync();
-        }
-
-        public async Task<Group?> GetGroup(Guid id)
-        {
-            return await _dbContext.Groups.FindAsync(id);
-        }
-
-        public async Task<IEnumerable<Group>> GetGroups()
-        {
-            return await _dbContext.Groups.ToListAsync();
-        }
-
-        public Task AddItemToGroup(Guid itemGroupId, Guid itemId)
-        {
-            throw new NotImplementedException();
         }
     }
 }

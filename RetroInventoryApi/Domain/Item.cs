@@ -11,11 +11,6 @@
         public CosmeticCondition CosmeticCondition { get; set; }
         public FunctionalCondition FunctionalCondition { get; set; }        
 
-        protected Item()
-        {
-
-        }
-
         public Item()
         {
             Id = Guid.NewGuid();

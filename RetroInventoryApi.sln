@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroInventoryApi", "RetroInventoryApi\RetroInventoryApi.csproj", "{5939E5D9-98BD-423C-B5FD-54DDDCE528EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroInventory.Api", "RetroInventoryApi\RetroInventory.Api.csproj", "{5939E5D9-98BD-423C-B5FD-54DDDCE528EA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroInventoryApi.Test", "RetroInventoryApi.Test\RetroInventoryApi.Test.csproj", "{079B18AB-0878-4DBF-921F-8FDB532C81AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroInventory.Web", "RetroInventory.Web\RetroInventory.Web\RetroInventory.Web.csproj", "{CA1D7F1A-8B7E-4C32-AA49-1551ABFF3659}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroInventory.Web", "RetroInventory.Web\RetroInventory.Web\RetroInventory.Web.csproj", "{CA1D7F1A-8B7E-4C32-AA49-1551ABFF3659}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroInventory.Web.Client", "RetroInventory.Web\RetroInventory.Web.Client\RetroInventory.Web.Client.csproj", "{8098C380-F60E-4121-80EF-74126CC3B1C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroInventory.Web.Client", "RetroInventory.Web\RetroInventory.Web.Client\RetroInventory.Web.Client.csproj", "{8098C380-F60E-4121-80EF-74126CC3B1C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

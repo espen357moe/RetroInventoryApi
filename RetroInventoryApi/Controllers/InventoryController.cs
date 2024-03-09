@@ -124,4 +124,46 @@ namespace RetroInventoryApi.Controllers
             return CreatedAtRoute("GetGroup", new { id = group.Id }, group);
         }
     }
+
+    [ApiController]
+    [Route("[controller]")]
+    public sealed class CollectionController : ControllerBase
+    {
+        private readonly ILogger<CollectionController> _logger;
+        private readonly Repository _repository;
+
+        public CollectionController(ILogger<CollectionController> logger, Repository repository)
+        {
+            _logger = logger;
+            _repository = repository;
+        }
+
+        [HttpGet(Name = "GetCollections")]
+        public async Task<IEnumerable<Collection>> GetCollections()
+        {
+            return await _repository.GetCollections();
+        }
+
+        [HttpGet("{id}", Name = "GetCollection")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<Collection>> GetCollection(Guid id)
+        {
+            var collection = await _repository.GetCollection(id);
+
+            if (collection == null)
+            {
+                return NotFound();
+            }
+
+            return collection;
+        }
+
+        [HttpPost(Name = "CreateCollection")]
+        public async Task<ActionResult<Collection>> CreateCollection(Collection collection)
+        {
+            await _repository.CreateCollection(collection);
+            return CreatedAtRoute("GetCollection", new { id = collection.Id }, collection);
+        }
+    }   
 }
