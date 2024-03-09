@@ -70,58 +70,58 @@ namespace RetroInventoryApi.Controllers
 
     [ApiController]
     [Route("[controller]")]
-    public sealed class ItemGroupController : ControllerBase
+    public sealed class GroupController : ControllerBase
     {
-        private readonly ILogger<ItemGroupController> _logger;
+        private readonly ILogger<GroupController> _logger;
         private readonly Repository _repository;
 
-        public ItemGroupController(ILogger<ItemGroupController> logger, Repository repository)
+        public GroupController(ILogger<GroupController> logger, Repository repository)
         {
             _logger = logger;
             _repository = repository;
         }
 
-        [HttpGet(Name = "GetItemGroups")]
-        public async Task<IEnumerable<Group>> GetItemGroups()
+        [HttpGet(Name = "GetGroups")]
+        public async Task<IEnumerable<Group>> GetGroups()
         {
-            return await _repository.GetItemGroups();
+            return await _repository.GetGroups();
         }
 
-        [HttpGet("{id}", Name = "GetItemGroup")]
+        [HttpGet("{id}", Name = "GetGroup")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Group>> GetItemGroup(Guid id)
+        public async Task<ActionResult<Group>> GetGroup(Guid id)
         {
-            var itemGroup = await _repository.GetItemGroup(id);
+            var group = await _repository.GetGroup(id);
 
-            if (itemGroup == null)
+            if (group == null)
             {
                 return NotFound();
             }
 
-            return itemGroup;
+            return group;
         }
 
-        [HttpPost(Name = "CreateItemGroup")]
-        public async Task<ActionResult<Group>> CreateItemGroup(Group itemGroup)
+        [HttpPost(Name = "CreateGroup")]
+        public async Task<ActionResult<Group>> CreateGroup(Group group)
         {
-            await _repository.CreateItemGroup(itemGroup);
-            return CreatedAtRoute("GetItemGroup", new { id = itemGroup.Id }, itemGroup);
+            await _repository.CreateGroup(group);
+            return CreatedAtRoute("GetGroup", new { id = group.Id }, group);
         }
 
-        [HttpPut(Name = "AddItemToItemGroup")]
-        public async Task<ActionResult<Group>> AddItemToItemGroup(Guid itemId, Guid itemGroupId)
+        [HttpPut(Name = "AddItemToGroup")]
+        public async Task<ActionResult<Group>> AddItemToGroup(Guid itemId, Guid groupId)
         {
             var item = await _repository.GetItem(itemId);
-            var itemGroup = await _repository.GetItemGroup(itemGroupId);
+            var group = await _repository.GetGroup(groupId);
 
-            if (itemGroup == null || item == null)
+            if (group == null || item == null)
             {
                 return NotFound();
             }
 
-            await _repository.AddItemToItemGroup(itemGroupId, itemId);
-            return CreatedAtRoute("GetItemGroup", new { id = itemGroup.Id }, itemGroup);
+            await _repository.AddItemToGroup(groupId, itemId);
+            return CreatedAtRoute("GetGroup", new { id = group.Id }, group);
         }
     }
 }

@@ -12,6 +12,16 @@ namespace RetroInventoryApi.Database
             _dbContext = dbContext;
         }
 
+        public async Task<IEnumerable<Collection>> GetCollections()
+        {
+            return await _dbContext.Collections.ToListAsync();
+        }
+
+        public async Task<Collection?> GetCollection(Guid id)
+        {
+            return await _dbContext.Collections.FindAsync(id);
+        }
+
         public async Task<IEnumerable<Item>> GetItems()
         {
             return await _dbContext.Items.ToListAsync();
@@ -42,23 +52,23 @@ namespace RetroInventoryApi.Database
             return true;
         }
 
-        public async Task CreateItemGroup(Group itemGroup)
+        public async Task CreateGroup(Group group)
         {
-            _dbContext.ItemGroups.Add(itemGroup);
+            _dbContext.Groups.Add(group);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<Group?> GetItemGroup(Guid id)
+        public async Task<Group?> GetGroup(Guid id)
         {
-            return await _dbContext.ItemGroups.FindAsync(id);
+            return await _dbContext.Groups.FindAsync(id);
         }
 
-        public async Task<IEnumerable<Group>> GetItemGroups()
+        public async Task<IEnumerable<Group>> GetGroups()
         {
-            return await _dbContext.ItemGroups.ToListAsync();
+            return await _dbContext.Groups.ToListAsync();
         }
 
-        public Task AddItemToItemGroup(Guid itemGroupId, Guid itemId)
+        public Task AddItemToGroup(Guid itemGroupId, Guid itemId)
         {
             throw new NotImplementedException();
         }
