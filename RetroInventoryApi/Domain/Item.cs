@@ -9,8 +9,12 @@
         public string? Notes { get; set; }
         public string? Location { get; set; }
         public CosmeticCondition CosmeticCondition { get; set; }
-        public FunctionalCondition FunctionalCondition { get; set; }
-        // public ItemGroup? ItemGroup { get; set; }
+        public FunctionalCondition FunctionalCondition { get; set; }        
+
+        protected Item()
+        {
+
+        }
 
         public Item()
         {
