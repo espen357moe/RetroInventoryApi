@@ -1,6 +1,33 @@
 @RetroInventoryApi_HostAddress = http://localhost:5286
 
+###
+POST {{RetroInventoryApi_HostAddress}}/Collection/
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "MIDI modules",
+
+}
+
+
+###
+POST {{RetroInventoryApi_HostAddress}}/Item/
+Accept: application/json
+Content-Type: application/json
+
+{
+  "manufacturer": "Sega",
+  "model": "Mega Drive",
+  "serialNumber": "123",
+  "notes": "Has a Hello Kitty sticker on it",
+  "location": "Jarle",
+  "cosmeticCondition": "Good",
+  "functionalCondition": "FullyFunctional"
+}
+
+###
 GET {{RetroInventoryApi_HostAddress}}/Item/
 Accept: application/json
 
-###
+

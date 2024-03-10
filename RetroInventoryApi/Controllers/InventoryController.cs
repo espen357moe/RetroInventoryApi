@@ -6,65 +6,43 @@ namespace RetroInventoryApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public sealed class ItemController : ControllerBase
+    public sealed class CollectionController : ControllerBase
     {
-        private readonly ILogger<ItemController> _logger;
+        private readonly ILogger<CollectionController> _logger;
         private readonly Repository _repository;
 
-        public ItemController(ILogger<ItemController> logger, Repository repository)
+        public CollectionController(ILogger<CollectionController> logger, Repository repository)
         {
             _logger = logger;
             _repository = repository;
         }
 
-        [HttpGet(Name = "GetItems")]
-        public async Task<IEnumerable<Item>> GetItems()
+        [HttpGet(Name = "GetCollections")]
+        public async Task<IEnumerable<Collection>> GetCollections()
         {
-            return await _repository.GetItems();
+            return await _repository.GetCollections();
         }
 
-        [HttpGet("{id}", Name = "GetItem")]
+        [HttpGet("{id}", Name = "GetCollection")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Item>> GetItem(Guid id)
+        public async Task<ActionResult<Collection>> GetCollection(Guid id)
         {
-            var item = await _repository.GetItem(id);
+            var collection = await _repository.GetCollection(id);
 
-            if (item == null)
+            if (collection == null)
             {
                 return NotFound();
             }
 
-            return item;
+            return collection;
         }
 
-        [HttpPost(Name = "CreateItem")]
-        public async Task<ActionResult<Item>> CreateItem(Item item)
+        [HttpPost(Name = "CreateCollection")]
+        public async Task<ActionResult<Collection>> CreateCollection(Collection collection)
         {
-            await _repository.CreateItem(item);
-            return CreatedAtRoute("GetItem", new { id = item.Id }, item);
-        }
-
-        [HttpDelete("{id}", Name = "DeleteItem")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteItem(Guid id)
-        {
-            var item = _repository.GetItem(id);
-
-            if (item.Result == null)
-            {
-                return NotFound();
-            }
-
-            var deletionSuccessful = await _repository.DeleteItem(id);
-
-            if (!deletionSuccessful)
-            {
-                return BadRequest();
-            }
-
-            return NoContent();
+            await _repository.CreateCollection(collection);
+            return CreatedAtRoute("GetCollection", new { id = collection.Id }, collection);
         }
     }
 
@@ -127,43 +105,65 @@ namespace RetroInventoryApi.Controllers
 
     [ApiController]
     [Route("[controller]")]
-    public sealed class CollectionController : ControllerBase
+    public sealed class ItemController : ControllerBase
     {
-        private readonly ILogger<CollectionController> _logger;
+        private readonly ILogger<ItemController> _logger;
         private readonly Repository _repository;
 
-        public CollectionController(ILogger<CollectionController> logger, Repository repository)
+        public ItemController(ILogger<ItemController> logger, Repository repository)
         {
             _logger = logger;
             _repository = repository;
         }
 
-        [HttpGet(Name = "GetCollections")]
-        public async Task<IEnumerable<Collection>> GetCollections()
+        [HttpGet(Name = "GetItems")]
+        public async Task<IEnumerable<Item>> GetItems()
         {
-            return await _repository.GetCollections();
+            return await _repository.GetItems();
         }
 
-        [HttpGet("{id}", Name = "GetCollection")]
+        [HttpGet("{id}", Name = "GetItem")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Collection>> GetCollection(Guid id)
+        public async Task<ActionResult<Item>> GetItem(Guid id)
         {
-            var collection = await _repository.GetCollection(id);
+            var item = await _repository.GetItem(id);
 
-            if (collection == null)
+            if (item == null)
             {
                 return NotFound();
             }
 
-            return collection;
+            return item;
         }
 
-        [HttpPost(Name = "CreateCollection")]
-        public async Task<ActionResult<Collection>> CreateCollection(Collection collection)
+        [HttpPost(Name = "CreateItem")]
+        public async Task<ActionResult<Item>> CreateItem(Item item)
         {
-            await _repository.CreateCollection(collection);
-            return CreatedAtRoute("GetCollection", new { id = collection.Id }, collection);
+            await _repository.CreateItem(item);
+            return CreatedAtRoute("GetItem", new { id = item.Id }, item);
         }
-    }   
+
+        [HttpDelete("{id}", Name = "DeleteItem")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteItem(Guid id)
+        {
+            var item = _repository.GetItem(id);
+
+            if (item.Result == null)
+            {
+                return NotFound();
+            }
+
+            var deletionSuccessful = await _repository.DeleteItem(id);
+
+            if (!deletionSuccessful)
+            {
+                return BadRequest();
+            }
+
+            return NoContent();
+        }
+    }           
 }
