@@ -1,6 +1,6 @@
 @RetroInventoryApi_HostAddress = http://localhost:5286
 
-GET {{RetroInventoryApi_HostAddress}}/inventory/
+GET {{RetroInventoryApi_HostAddress}}/Item/
 Accept: application/json
 
 ###
